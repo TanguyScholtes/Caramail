@@ -1,0 +1,19 @@
+*{
+    box-sizing: border-box;
+}
+
+#content{
+    width: 90%;
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 2em 1em;
+}
+
+#footer{
+    text-align: center;
+}
+
+.pixel-heart{
+    width: 1em;
+    margin: 0 0.25em;
+}
