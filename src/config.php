@@ -1,7 +1,6 @@
 <?php
 /* --- Improved error reporting --- */
-ini_set('display_errors', 'On');
-ini_set('error_reporting', 'E_ALL');
+ini_set( 'display_errors', 1 );
 error_reporting( E_ALL );
 
 define( "WEBSITE_TITLE", "Caramail en PHP" );
@@ -10,7 +9,4 @@ define( "WEBSITE_DESCRIPTION", "A messenger website in PHP, part of BeCode's stu
 define( "WEBSITE_LANG", "fr-BE" );
 define( "WEBSITE_CHARSET", "utf-8" );
 
-require 'objects/Conversation.php';
-require 'objects/Message.php';
 require 'objects/Reaction.php';
-require 'objects/User.php';
