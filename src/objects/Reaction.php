@@ -1,44 +1,10 @@
 <?php
 
-class Reaction {
-    /*
-     * Reaction Class
-     * Reactions are emojis used by users as reactions to other users' messages
-     */
+require 'Model.php';
 
-    protected $connectDB = null;
+class Reaction extends Model {
 
-    public function __construct () {
-        /*
-         * Connection to database
-         * @param none
-         * @return A PDO object representing a connection to database in $connectDB if successfull, else throw error message
-         */
-
-        //get database configuration in db.ini
-        $dbConfig = parse_ini_file( 'db.ini' );
-
-        $pdoDsn = $dbConfig[ 'driver' ] . ':dbname=' . $dbConfig[ 'dbname' ] . ';host=' . $dbConfig[ 'host' ];
-        $pdoUsername = $dbConfig[ 'username' ];
-        $pdoPassword = $dbConfig[ 'password' ];
-        $pdoOptions = [
-            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_OBJ,
-            \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-        ];
-
-        //connection to database
-        try {
-            //connect to database with given configuration & options
-            $this -> connectDB = new \PDO( $pdoDsn, $pdoUsername, $pdoPassword, $pdoOptions );
-            $this -> connectDB -> exec( 'SET CHARACTER SET UTF8' );
-            $this -> connectDB -> exec( 'SET NAMES UTF8' );
-        } catch ( \PDOException $e ) {
-            //if connection fails, stop process & return error message
-            die( $e -> getMessage() );
-        }
-    }
-
-    public function createReaction ( $authorId, $messageId, $emoji ) {
+    public function create ( $authorId, $messageId, $emoji ) {
         /*
          * Creates a Reaction and save it in database
          * @param integer $authorId The id of the user who created this Reaction
@@ -52,15 +18,15 @@ class Reaction {
             try {
                 //define sql request with jokers ':variable'
                 $sql = 'INSERT INTO reactions
-                        ( `id`, `author_id`, `message_id`, `emoji` )
-                        VALUES ( NULL, :authorId, :messageId, :emoji )';
+                        ( `author_id`, `message_id`, `emoji` )
+                        VALUES ( ?, ?, ? )';
                 //prepare sql request
                 $pdoStmnt = $this -> connectDB -> prepare( $sql );
                 //execute prepared request while replacing jokers with variables values
                 $pdoStmnt -> execute( [
-                    ':author_id' => $authorId,
-                    ':message_id' => $messageId,
-                    ':emoji' => $emoji
+                    $authorId,
+                    $messageId,
+                    $emoji
                  ] );
 
                  //return true to inform the creation went well
@@ -73,6 +39,37 @@ class Reaction {
             //if connection to database failed
             return false;
         }
+    }
+
+    public function getReaction ( $id ) {
+        /*
+         * Get Reaction based on its ID
+         * @param integer $id The id of the Reaction to get
+         * @return object The Reaction with given ID
+         */
+
+         if ( $this -> connectDB ) {
+             //if connection to database was successfull
+             try {
+                 //define sql request with jokers ':variable'
+                 $sql = 'SELECT * FROM reactions WHERE id = :id';
+                 //prepare sql request
+                 $pdoStmnt = $this -> connectDB -> prepare( $sql );
+                 //execute prepared request while replacing jokers with variables values
+                 $pdoStmnt -> execute( [
+                     ':id' => $id,
+                  ] );
+
+                  //return the first Reaction with matching ID
+                 return $pdoStmnt -> fetch();
+             } catch ( \PDOException $e ) {
+                 //if the request failed, stop request & return error message
+                 return $e -> getMessage();
+             }
+         } else {
+             //if connection to database failed
+             return false;
+         }
     }
 
     public function getAllReactionsOfMessage ( $messageId ) {
@@ -106,7 +103,7 @@ class Reaction {
         }
     }
 
-    public function updateReaction ( $id, $authorId, $messageId, $emoji ) {
+    public function update ( $id, $authorId, $messageId, $emoji ) {
         /*
          * Update Reaction with matching ID
          * @param integer $id The id of the Reaction to update
@@ -121,18 +118,18 @@ class Reaction {
             try {
                 //define sql request with jokers ':variable'
                 $sql = 'UPDATE reactions
-                        SET author_id = :authorId,
-                            message_id = :messageId,
-                            emoji = :emoji
-        				WHERE id = :id';
+                        SET author_id = ?,
+                            message_id = ?,
+                            emoji = ?
+        				WHERE id = ?';
                 //prepare sql request
                 $pdoStmnt = $this -> connectDB -> prepare( $sql );
                 //execute prepared request while replacing jokers with variables values
                 $pdoStmnt -> execute( [
-                    ':id' => $id,
-                    ':author_id' => $authorId,
-                    ':message_id' => $messageId,
-                    ':emoji' => $emoji
+                    $authorId,
+                    $messageId,
+                    $emoji,
+                    $id
                  ] );
 
                  //return true to inform the update went well
@@ -147,7 +144,7 @@ class Reaction {
         }
     }
 
-    public function deleteReaction ( $id ) {
+    public function delete ( $id ) {
         /*
          * Delete Reaction with matching ID
          * @param integer $id The id of the Reaction to delete
