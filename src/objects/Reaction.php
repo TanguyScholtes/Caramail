@@ -12,7 +12,7 @@ class Reaction {
         /*
          * Connection to database
          * @param none
-         * @return A connection to database in $connectDB if successfull, else throw error message
+         * @return A PDO object representing a connection to database in $connectDB if successfull, else throw error message
          */
 
         //get database configuration in db.ini
@@ -75,7 +75,7 @@ class Reaction {
         }
     }
 
-    public function getMessageAllReactions ( $messageId ) {
+    public function getAllReactionsOfMessage ( $messageId ) {
         /*
          * Get all Reactions from Message, based on Message ID
          * @param integer $messageId The id of the message whose Reaction this is
