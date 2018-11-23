@@ -2,71 +2,40 @@
 <?php require 'partials/header.php'; ?>
 
 <?php
-//create new object to use object-specific method
-$react = new Reaction();
-
-//Quick & dirty reaction save
-if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && $_REQUEST[ 'action' ] == 'create' ) {
-    //if the page is requested using the POST method (result of the form submission as it is defined with method="post")
-    //AND if the query string has a variable "action" with value "create"
-    $saved = $react -> create( 1, 1, $_POST[ 'create-emoji' ] ); //note that with these params, reaction will always be by User of ID 1 & linked to Message of ID 1
-}
-
-//Quick & dirty reaction edit
-if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && $_REQUEST[ 'action' ] == 'update' && isset( $_REQUEST[ 'id' ] ) ) {
-    $updated = $react -> update( $_REQUEST[ 'id' ], $_POST[ 'update-author' ], $_POST[ 'update-message' ], $_POST[ 'update-emoji' ] );
-}
-
-//Quick & dirty reaction delete
-if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && $_REQUEST[ 'action' ] == 'delete' && isset( $_REQUEST[ 'id' ] ) ) {
-    $deleted = $react -> delete( $_REQUEST[ 'id' ] );
-}
+    $user = ( object ) array( 'firstname' => 'Tanguy', 'lastname' => 'Scholtes', 'id' => 1 );
+    $message = ( object ) array( 'content' => 'Emojis... Emojis everywhere...', 'timestamp' => '23-11-18 16:16', 'id' => 1, 'author' => $user );
 ?>
 
 <main id="content">
     <h1 class="content-title">Index</h1>
 
-    <p>Emojis... Emojis everywhere...</p>
-
-    <?php if ( $_SERVER[ 'REQUEST_METHOD' ] == 'GET' && isset( $_REQUEST[ 'action' ] ) && $_REQUEST[ 'action' ] == 'update' && isset( $_REQUEST[ 'id' ] ) ): ?>
-        <?php $toUpdate = $react -> getReaction( $_REQUEST[ 'id' ] ); ?>
-        <form method="post" action="index.php?action=update&id=<?php echo $toUpdate -> id; ?>">
-            <label for="update-emoji">Edit reaction</label>
-            <p class="emoji-picker-container">
-                <input id="update-emoji" name="update-emoji" type="text" data-emojiable="true" data-emoji-input="unicode" maxlength="1" value="<?php echo $toUpdate -> emoji; ?>" />
-            </p>
-            <input type="hidden" id="update-author" name="update-author" value="<?php echo $toUpdate -> author_id; ?>" />
-            <input type="hidden" id="update-message" name="update-message" value="<?php echo $toUpdate -> message_id; ?>" />
-            <button type="submit">Edit</button>
-        </form>
-    <?php else: ?>
-        <form method="post" action="index.php?action=create">
-            <label for="create-emoji">Add reaction</label>
-            <p class="emoji-picker-container">
-                <input id="create-emoji" name="create-emoji" type="text" data-emojiable="true" data-emoji-input="unicode" maxlength="1" />
-            </p>
-            <button type="submit">React !</button>
-        </form>
-    <?php endif; ?>
+    <p><?php echo $message -> timestamp; ?> <?php echo $message -> author -> firstname; ?> <?php echo $message -> author -> lastname; ?> > <?php echo $message -> content; ?></p>
 
     <?php
-        //display all reactions of Message of ID 1
-        $reactions = $react -> getAllReactionsOfMessage( 1 ); ?>
-    <?php if ( $reactions ): ?>
-        <ul>
+        //display all reactions of Message based on ID of the message
+        $react = new Reaction();
+        $reactions = $react -> getAllReactionsOfMessage( $message -> id );
+        if ( $reactions ):
+    ?>
+        <div class="reactions-wrapper">
             <?php foreach ( $reactions as $reaction ): ?>
-                <li>
-                    <?php echo $reaction -> emoji; ?>
-                    <a href="index.php?action=update&id=<?php echo $reaction -> id; ?>"><span class="fas fa-edit"></span></a>
-                    <form method="post" action="index.php?action=delete&id=<?php echo $reaction -> id; ?>">
-                        <button type="submit"><span class="fas fa-trash"></span></button>
-                    </form>
-                </li>
+                <form class="inline-form" method="post" action="deleteReaction.php">
+                    <input type="hidden" id="delete-id" name="delete-id" value="<?php echo $reaction -> id; ?>" />
+                    <button type="submit"><?php echo $reaction -> emoji; ?></button>
+                </form>
             <?php endforeach; ?>
-        </ul>
-    <?php else: ?>
-        <p>No reaction to display.</p>
+        </div>
     <?php endif; ?>
+
+    <form method="post" action="createReaction.php">
+        <label for="create-emoji">Add reaction</label>
+        <p class="emoji-picker-container">
+            <input type="hidden" id="create-user-id" name="create-user-id" value="<?php echo $user -> id; ?>" />
+            <input type="hidden" id="create-message-id" name="create-message-id" value="<?php echo $message -> id; ?>" />
+            <input id="create-emoji" name="create-emoji" type="text" data-emojiable="true" data-emoji-input="unicode" maxlength="1" />
+        </p>
+        <button type="submit">React !</button>
+    </form>
 </main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

@@ -106,6 +106,13 @@ class Reaction extends Model {
     public function update ( $id, $authorId, $messageId, $emoji ) {
         /*
          * Update Reaction with matching ID
+         *
+         * DO NOT US THIS METHOD AS IT HAS BEEN DEPRECIATED
+         * Users just want to remove an old reaction and pick a new one
+         * Not go through the struggle of editing through a form
+         * This method is solely for the sake of having
+         * a full CRUD methodology for the object
+         *
          * @param integer $id The id of the Reaction to update
          * @param integer $authorId The id of the author of the Reaction
          * @param integer $messageId The id of the message whose Reaction this is
