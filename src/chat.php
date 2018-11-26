@@ -51,7 +51,7 @@
                                 }
                              ?>
                             <?php if ( $reaction -> author -> id == $_SESSION[ 'user' ] -> id ): ?>
-                                <button type="submit" title="<?php echo $reaction -> author -> firstname; ?> <?php echo $reaction -> author -> lastname; ?>">
+                                <button class="emoji-button" type="submit" title="<?php echo $reaction -> author -> firstname; ?> <?php echo $reaction -> author -> lastname; ?>">
                                     <?php echo $reaction -> emoji; ?>
                                 </button>
                             <?php else: ?>
