@@ -16,4 +16,6 @@ define( "WEBSITE_LANG", "fr-BE" );
 define( "WEBSITE_CHARSET", "utf-8" );
 /* ----- */
 
+session_start();
+
 require 'objects/Reaction.php';

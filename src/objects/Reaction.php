@@ -4,7 +4,7 @@ require 'Model.php';
 
 class Reaction extends Model {
 
-    public function create ( $authorId, $messageId, $emoji ) {
+    public function createReaction ( $authorId, $messageId, $emoji ) {
         /*
          * Creates a Reaction and save it in database
          * @param integer $authorId The id of the user who created this Reaction
@@ -103,7 +103,7 @@ class Reaction extends Model {
         }
     }
 
-    public function update ( $id, $authorId, $messageId, $emoji ) {
+    public function updateReaction ( $id, $authorId, $messageId, $emoji ) {
         /*
          * Update Reaction with matching ID
          *
@@ -151,7 +151,7 @@ class Reaction extends Model {
         }
     }
 
-    public function delete ( $id ) {
+    public function deleteReaction ( $id ) {
         /*
          * Delete Reaction with matching ID
          * @param integer $id The id of the Reaction to delete

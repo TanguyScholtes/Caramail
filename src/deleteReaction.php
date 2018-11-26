@@ -2,13 +2,14 @@
 
 require 'config.php';
 
+$redirect = $_REQUEST[ "page" ];
 $reaction = new Reaction();
 
 //Quick & dirty reaction delete
-if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset( $_POST[ 'delete-id' ] ) ) {
-    $deleted = $reaction -> delete( $_POST[ 'delete-id' ] );
+if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset( $_POST[ 'reaction-delete-id' ] ) ) {
+    $deleted = $reaction -> deleteReaction( intval( $_POST[ 'reaction-delete-id' ] ) );
 }
 
 //redirect to view page
-header( 'Location: index.php' );
+header( 'Location: ' . $redirect );
 die();
