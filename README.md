@@ -1,4 +1,4 @@
-# Caramail
+# Oufti
 
 > A PHP chatting website, part of the BeCode studentship
 > Made by Dan Gjonaj, Olivier Huttmacher, Tanguy Scholtes & Julie Vanderbyse
