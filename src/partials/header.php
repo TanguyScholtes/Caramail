@@ -10,12 +10,10 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap-reboot.min.css">
-    <link rel="stylesheet" href="css/bootstrap/bootstrap-grid.min.css">
     <link href="lib/emoji-picker/css/emoji.css" rel="stylesheet">
 
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/ts-styles.css">
 
     <link rel="shortcut icon" href="img/favicon.ico" />
 </head>
