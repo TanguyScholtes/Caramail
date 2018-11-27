@@ -1,0 +1,42 @@
+.inline-form{
+    display: inline-block;
+    padding: 0;
+    margin: 0 0 1em 0;
+}
+
+.reactions-wrapper{
+    margin-left: 124px;
+}
+
+.add-reaction .emoji-picker-container{
+    position: relative;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    margin-right: 1em;
+}
+
+.add-reaction .reaction-emoji-input{
+    width: 0;
+    height: 0;
+    padding: 0;
+    border: none;
+    min-height: 0;
+    min-width: 0;
+}
+
+.add-reaction .emoji-picker-icon{
+    top: -0.75em;
+    left: 0.25em;
+}
+
+.inline-form .emoji-button{
+    border: 1px solid gray;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background-color: lightgray;
+    border-radius: 5px;
+}

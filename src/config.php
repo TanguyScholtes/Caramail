@@ -9,7 +9,7 @@ define( "DATABASE_CONFIG", 'db.ini' );
 /* ----- */
 
 /* Front-end constants */
-define( "WEBSITE_TITLE", "Oufti" );
+define( "WEBSITE_TITLE", "Oufti - Le Chat de Ouf !" );
 define( "WEBSITE_AUTHORS", "Dan Gjonaj, Olivier Huttmacher, Tanguy Scholtes, Julie Vanderbyse" );
 define( "WEBSITE_DESCRIPTION", "A messenger website in PHP, part of BeCode's studentship" );
 define( "WEBSITE_LANG", "fr-BE" );

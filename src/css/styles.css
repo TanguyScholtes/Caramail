@@ -36,7 +36,7 @@ input{
 
 }
 button {
-    display: flex;
+    display: block;
     justify-content: center;
     margin: 0 auto;
     width: 100px;

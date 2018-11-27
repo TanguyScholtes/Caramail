@@ -1,0 +1,33 @@
+#header{
+    margin: 0;
+    padding: 2em 1em;
+    position: relative;
+}
+
+.menu-link{
+    color: $menu-link;
+    text-decoration: none;
+    font-weight: bold;
+    margin-right: 1em;
+    font-size: 1.33rem;
+}
+
+.menu-link:last-child{
+    margin-right: 0;
+}
+
+.menu-link:hover, .menu-link:focus{
+    text-decoration: underline;
+    color: $menu-link-hover;
+}
+
+#site-title{
+    position: absolute;
+    right: 1em;
+    top: 0;
+    margin: 1em 1em 0 0;
+}
+
+#site-title img{
+    height: 3.5em;
+}

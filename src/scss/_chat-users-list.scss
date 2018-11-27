@@ -1,0 +1,30 @@
+#left-column{
+    padding: 2em 1em;
+    background-color: $background;
+}
+
+.user-avatar{
+    border-radius: 50%;
+    width: 35px;
+    max-width: 250px;
+    margin: 0 1em 0 0;
+}
+
+.users-list{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.users-list li{
+    margin: 1em 0;
+}
+
+.users-list li a{
+    display: table;
+}
+
+.users-list li a *{
+    display: table-cell;
+    vertical-align: middle;
+}

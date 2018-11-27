@@ -1,96 +1,71 @@
-<?php require 'config.php'; ?>
-<?php require 'partials/header.php'; ?>
-
 <?php
-    $url = explode( "/", __FILE__ );
-    $currentPage = "";
-    for ( $i = 4; $i < count( $url ); $i++ ) {
-        $currentPage .= $url[ $i ];
+require 'config.php';
+
+//TODO: replace with logged in user
+$_SESSION[ 'user' ] = ( object ) array( 'firstname' => 'Tanguy', 'lastname' => 'Scholtes', 'id' => 1 );
+/*-----*/
+
+//TODO: replace with User's method to get all users
+$users = [
+    ( object ) array( 'firstname' => 'Tanguy', 'lastname' => 'Scholtes', 'id' => 1, 'avatar' => 'https://api.adorable.io/avatars/285/TanguyScholtes@adorable.png' ),
+    ( object ) array( 'firstname' => 'Julie', 'lastname' => 'Vanderbyse', 'id' => 2, 'avatar' => 'https://api.adorable.io/avatars/285/JulieVanderbyse@adorable.png' ),
+    ( object ) array( 'firstname' => 'Dan', 'lastname' => 'Gjonaj', 'id' => 3, 'avatar' => 'https://api.adorable.io/avatars/285/DanGjonaj@adorable.png' ),
+    ( object ) array( 'firstname' => 'Olivier', 'lastname' => 'Huttmacher', 'id' => 4, 'avatar' => 'https://api.adorable.io/avatars/285/OlivierHuttmacher@adorable.png' ),
+    ( object ) array( 'firstname' => 'Samuel L.', 'lastname' => 'Jackson', 'id' => 5, 'avatar' => 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTY1MzgzOTYxNV5BMl5BanBnXkFtZTgwMDI4OTEwMjE@._CR878,111,387,387_UX402_UY402._SY201_SX201_AL_.jpg' )
+];
+/*-----*/
+
+//TODO: replace with Conversation's method to get current conversation based on slug given by query string
+//get all Conversations objects
+$conversations = [
+    ( object ) array( 'subject' => 'Général', 'author' => $users[ 0 ], 'id' => 1, 'slug' => 'general' ),
+    ( object ) array( 'subject' => 'Poop fetish', 'author' => $users[ 1 ], 'id' => 2, 'slug' => 'poop_fetish' )
+];
+//check if a chat slug is given
+if ( isset( $_GET[ 'chat' ] ) ) {
+    //if a chat slug is given, use it
+    $convoSlug = $_GET[ 'chat' ];
+} else {
+    //else, fallback to general chat
+    $convoSlug = "general";
+}
+//default value of conversation : general chat
+$conversation = $conversations[ 0 ];
+//get Conversation object with matching slug in Conversations array
+foreach ( $conversations as $convo ) {
+    if ( $convoSlug == $convo -> slug ) {
+        //if this Converstion matches the slug given in query string, get that Conversation
+        $conversation = $convo;
     }
+}
+/*-----*/
 
-    $_SESSION[ 'user' ] = ( object ) array( 'firstname' => 'Tanguy', 'lastname' => 'Scholtes', 'id' => 1 );
+//TODO: replace with Message's method to get all messages of conversation
+//get all Messages
+$allMessages = [
+    ( object ) array( 'content' => 'Emojis... Emojis everywhere...', 'timestamp' => '23-11-2018 16:16', 'id' => 1, 'author' => $users[ 0 ], 'conversationId' => 1 ),
+    ( object ) array( 'content' => 'This is message two. Wazzup ?', 'timestamp' => '26-11-2018 11:27', 'id' => 2, 'author' => $users[ 1 ], 'conversationId' => 1 ),
+    ( object ) array( 'content' => 'WAZZZZZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'timestamp' => '26-11-2018 12:22', 'id' => 3, 'author' => $users[ 0 ], 'conversationId' => 1 ),
+    ( object ) array( 'content' => 'Wow, j\'ai mangé de l\'herbe à chat aujourd\'hui', 'timestamp' => '26-11-2018 14:40', 'id' => 4, 'author' => $users[ 3 ], 'conversationId' => 2 ),
+    ( object ) array( 'content' => 'Pourtant le caca c\'est délicieux', 'timestamp' => '26-11-2018 14:40', 'id' => 5, 'author' => $users[ 2 ], 'conversationId' => 2 ),
+    ( object ) array( 'content' => 'Oui mais la pizza c\'est la vie !', 'timestamp' => '26-11-2018 14:41', 'id' => 6, 'author' => $users[ 0 ], 'conversationId' => 2 ),
+    ( object ) array( 'content' => 'Super, maintenant j\'ai envie de manger du caca', 'timestamp' => '26-11-2018 14:42', 'id' => 7, 'author' => $users[ 3 ], 'conversationId' => 2 ),
+    ( object ) array( 'content' => 'On peut toujours s\'arranger pour t\'en rammener à ma prochaine promenade !', 'timestamp' => '26-11-2018 14:43', 'id' => 8, 'author' => $users[ 1 ], 'conversationId' => 2),
+    ( object ) array( 'content' => 'The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men. Blessed is he who, in the name of charity and good will, shepherds the weak through the valley of darkness, for he is truly his brother\'s keeper and the finder of lost children. And I will strike down upon thee with great vengeance and furious anger those who would attempt to poison and destroy My brothers. And you will know My name is the Lord when I lay My vengeance upon thee.<br /><br />
+        Look, just because I don\'t be givin\' no man a foot massage don\'t make it right for Marsellus to throw Antwone into a glass motherfuckin\' house, fuckin\' up the way the nigger talks. Motherfucker do that shit to me, he better paralyze my ass, \'cause I\'ll kill the motherfucker, know what I\'m sayin\'?', 'timestamp' => '27-11-2018 09:40', 'id' => 9, 'author' => $users[ 4 ], 'conversationId' => 1)
+];
+$messages = [];
+foreach( $allMessages as $msg ) {
+    //walk array of Messages
+    if ( $msg -> conversationId == $conversation -> id ) {
+        //if this Message belongs to current Conversation
+        //stock it in $messages array (which will be displayed below)
+        $messages[] = $msg;
+    }
+}
+/*-----*/
 
-    $users = [
-        ( object ) array( 'firstname' => 'Tanguy', 'lastname' => 'Scholtes', 'id' => 1 ),
-        ( object ) array( 'firstname' => 'Julie', 'lastname' => 'Vanderbyse', 'id' => 2 )
-    ];
-    $messages = [
-        ( object ) array( 'content' => 'Emojis... Emojis everywhere...', 'timestamp' => '23-11-2018 16:16', 'id' => 1, 'author' => $users[ 0 ] ),
-        ( object ) array( 'content' => 'This is message two. Wazzup ?', 'timestamp' => '26-11-2018 11:27', 'id' => 2, 'author' => $users[ 1 ] ),
-        ( object ) array( 'content' => 'WAZZZZZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'timestamp' => '26-11-2018 12:22', 'id' => 3, 'author' => $users[ 0 ] )
-    ];
-?>
+//get current page & query string for redirection to display when an action is performed on database
+$currentPage = $_SERVER['REQUEST_URI'];
 
-<main id="content">
-    <h1 class="content-title">Index</h1>
-
-    <?php if ( $messages ): ?>
-        <?php foreach ( $messages as $message ): ?>
-            <p><?php echo $message -> timestamp; ?> <?php echo $message -> author -> firstname; ?> <?php echo $message -> author -> lastname; ?> > <?php echo $message -> content; ?></p>
-            <div class="reactions-wrapper">
-                <form class="inline-form" method="post" action="createReaction.php?page=<?php echo $currentPage; ?>" name="reactionCreate<?php echo $message -> id; ?>">
-                    <p class="emoji-picker-container">
-                        <input type="hidden" name="reaction-create-user-id" value="<?php echo $_SESSION[ 'user' ] -> id; ?>" />
-                        <input type="hidden" name="reaction-create-message-id" value="<?php echo $message -> id; ?>" />
-                        <input class="reaction-emoji-input" name="reaction-create-emoji" type="text" data-emojiable="true" data-emoji-input="unicode" maxlength="1" oninput="document.forms[ 'reactionCreate<?php echo $message -> id; ?>' ].submit()" />
-                    </p>
-                </form>
-                <?php
-                    // display all reactions of Message based on ID of the message
-                    $react = new Reaction();
-                    $reactions = $react -> getAllReactionsOfMessage( $message -> id );
-                    if ( $reactions ):
-                ?>
-                    <?php foreach ( $reactions as $reaction ): ?>
-                        <form class="inline-form" method="post" action="deleteReaction.php?page=<?php echo $currentPage; ?>">
-                            <input type="hidden" name="reaction-delete-id" value="<?php echo $reaction -> id; ?>" />
-                            <?php foreach ( $users as $user ){
-                                    if ( $user -> id == $reaction -> author_id ) {
-                                        $reaction -> author = $user;
-                                    }
-                                }
-                             ?>
-                            <?php if ( $reaction -> author -> id == $_SESSION[ 'user' ] -> id ): ?>
-                                <button class="emoji-button" type="submit" title="<?php echo $reaction -> author -> firstname; ?> <?php echo $reaction -> author -> lastname; ?>">
-                                    <?php echo $reaction -> emoji; ?>
-                                </button>
-                            <?php else: ?>
-                                <span title="<?php echo $reaction -> author -> firstname; ?> <?php echo $reaction -> author -> lastname; ?>">
-                                    <?php echo $reaction -> emoji; ?>
-                                </span>
-                            <?php endif; ?>
-                        </form>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-        <?php endforeach; ?>
-    <?php else: ?>
-        <p>No message yet. Write one !</p>
-    <?php endif; ?>
-</main>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="lib/emoji-picker/js/config.js"></script>
-<script src="lib/emoji-picker/js/util.js"></script>
-<script src="lib/emoji-picker/js/jquery.emojiarea.js"></script>
-<script src="lib/emoji-picker/js/emoji-picker.js"></script>
-
-<script>
-    // Initializes and creates emoji set from sprite sheet
-    window.emojiPicker = new EmojiPicker( {
-        emojiable_selector: '[data-emojiable=true]',
-        assetsPath: '../lib/emoji-picker/img/',
-        popupButtonClasses: 'fa fa-smile-o'
-    } );
-    // Finds all elements with `emojiable_selector` and converts them to rich emoji input fields
-    // You may want to delay this step if you have dynamically created input fields that appear later in the loading process
-    // It can be called as many times as necessary; previously converted input fields will not be converted again
-    window.emojiPicker.discover();
-
-    // Add a hover tooltip (via title HTML attribute) to each reaction emoji selector
-    Array.from( document.querySelectorAll( '.emoji-picker-icon' ) ).forEach( function ( element ) {
-        element.setAttribute( "title", "Add reaction…" );
-    } );
-</script>
-
-<?php require 'partials/footer.php'; ?>
+require 'templates/chat-template.php';

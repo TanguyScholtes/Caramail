@@ -1,0 +1,56 @@
+.wrapper{
+    display: grid;
+    grid-template-columns: 18% auto;
+}
+
+#content{
+    padding: 2em 2em;
+}
+
+.content-title{
+    margin: 0 0 2em 0;
+}
+
+#conversation-subject{
+    font-size: 0.5em;
+}
+
+.message-user-avatar{
+    border-radius: 50%;
+    width: 100px;
+    max-width: 250px;
+    float: left;
+    margin: 0 1.5em 1em 0;
+}
+
+.message-timestamp{
+    font-size: 0.8em;
+    color: rgb(110, 110, 110);
+    margin-right: 0.6em;
+}
+
+.message-content-wrapper{
+    background-color: #EBEBEB;
+    padding: 1em 1.5em 1em 124px;
+    border-radius: 2em 1em 1em 2em;
+    margin: 0.75em 0;
+}
+
+.message-content{
+    padding: 0;
+    margin: 0;
+}
+
+.message{
+    position: relative;
+}
+
+.message-controls{
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+.message-delete{
+    margin-left: 0.8em;
+}

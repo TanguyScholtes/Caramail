@@ -1,0 +1,28 @@
+/* ------------ External Imports ------------ */
+@import "normalize";
+@import "../lib/emoji-picker/css/emoji";
+
+/*------- Variables -------*/
+@import "variables";
+
+/* ------- Colors ------- */
+@import "colors";
+
+/* ------- Fonts ------- */
+@import "fonts";
+
+/* ------- General Styles -------*/
+html{
+    color: $text;
+}
+
+#header, #footer{
+    background-color: $background-second;
+}
+
+@import "banner";
+@import "chat-users-list";
+@import "chat-main";
+@import "chat-reactions-forms";
+@import "chat-new-message-forms";
+@import "footer";
