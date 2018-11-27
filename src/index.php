@@ -1,7 +1,13 @@
 <?php
-require 'Model.php';
+$servername = "localhost";
 
-class messages extends Model {
+$bdd = new mysqli($servername,"", "");
+if ($bdd->connect_error) {
+    die("Connection failed: " . $bdd->connect_error);
+}
+echo "Connected successfully";
+
+class messages {
   public $id;
   public $userID;
   public $conversationID;
@@ -17,5 +23,4 @@ class messages extends Model {
     $this->timeStamp = $timeStamp;
   }
 }
-
 ?>
