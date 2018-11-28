@@ -6,8 +6,10 @@
 .user-avatar{
     border-radius: 50%;
     width: 35px;
+    height: 35px;
     max-width: 250px;
     margin: 0 1em 0 0;
+    object-fit: cover;
 }
 
 .users-list{
