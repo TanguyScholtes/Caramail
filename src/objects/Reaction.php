@@ -1,7 +1,5 @@
 <?php
 
-require 'Model.php';
-
 class Reaction extends Model {
 
     public function createReaction ( $authorId, $messageId, $emoji ) {
@@ -107,7 +105,7 @@ class Reaction extends Model {
         /*
          * Update Reaction with matching ID
          *
-         * DO NOT US THIS METHOD AS IT HAS BEEN DEPRECIATED
+         * DO NOT US THIS METHOD AS IT HAS BEEN DEPRECATED
          * Users just want to remove an old reaction and pick a new one
          * Not go through the struggle of editing through a form
          * This method is solely for the sake of having
@@ -140,6 +138,68 @@ class Reaction extends Model {
                  ] );
 
                  //return true to inform the update went well
+                return true;
+            } catch ( \PDOException $e ) {
+                //if the request failed, stop request & return error message
+                return $e -> getMessage();
+            }
+        } else {
+            //if connection to database failed
+            return false;
+        }
+    }
+
+    public function deleteAllReactionsOfMessage( $id ) {
+        /*
+         * Delete All Reactions of Message with matching ID
+         * @param integer $id The id of the Message with all Reactions to be deleted
+         * @return boolean true
+         */
+
+        if ( $this -> connectDB ) {
+            //if connection to database was successfull
+            try {
+                //define sql request with jokers ':variable'
+                $sql = 'DELETE * FROM reactions WHERE message_id = :id';
+                //prepare sql request
+                $pdoStmnt = $this -> connectDB -> prepare( $sql );
+                //execute prepared request while replacing jokers with variables values
+                $pdoStmnt -> execute( [
+                    ':id' => $id
+                 ] );
+
+                 //return true to inform the deletion went well
+                return true;
+            } catch ( \PDOException $e ) {
+                //if the request failed, stop request & return error message
+                return $e -> getMessage();
+            }
+        } else {
+            //if connection to database failed
+            return false;
+        }
+    }
+
+    public function deleteAllReactionsOfUser( $id ) {
+        /*
+         * Delete All Reactions of Message with matching ID
+         * @param integer $id The id of the Author of all Reactions to be deleted
+         * @return boolean true
+         */
+
+        if ( $this -> connectDB ) {
+            //if connection to database was successfull
+            try {
+                //define sql request with jokers ':variable'
+                $sql = 'DELETE * FROM reactions WHERE author_id = :id';
+                //prepare sql request
+                $pdoStmnt = $this -> connectDB -> prepare( $sql );
+                //execute prepared request while replacing jokers with variables values
+                $pdoStmnt -> execute( [
+                    ':id' => $id
+                 ] );
+
+                 //return true to inform the deletion went well
                 return true;
             } catch ( \PDOException $e ) {
                 //if the request failed, stop request & return error message
