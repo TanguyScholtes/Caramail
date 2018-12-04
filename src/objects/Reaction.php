@@ -160,7 +160,7 @@ class Reaction extends Model {
             //if connection to database was successfull
             try {
                 //define sql request with jokers ':variable'
-                $sql = 'DELETE * FROM reactions WHERE message_id = :id';
+                $sql = 'DELETE FROM reactions WHERE message_id = :id';
                 //prepare sql request
                 $pdoStmnt = $this -> connectDB -> prepare( $sql );
                 //execute prepared request while replacing jokers with variables values
@@ -191,7 +191,7 @@ class Reaction extends Model {
             //if connection to database was successfull
             try {
                 //define sql request with jokers ':variable'
-                $sql = 'DELETE * FROM reactions WHERE author_id = :id';
+                $sql = 'DELETE FROM reactions WHERE author_id = :id';
                 //prepare sql request
                 $pdoStmnt = $this -> connectDB -> prepare( $sql );
                 //execute prepared request while replacing jokers with variables values
