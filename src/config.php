@@ -18,4 +18,5 @@ define( "WEBSITE_CHARSET", "utf-8" );
 
 session_start();
 
+require 'objects/Model.php';
 require 'objects/Reaction.php';
