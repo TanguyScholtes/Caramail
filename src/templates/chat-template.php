@@ -1,6 +1,8 @@
 <?php require 'partials/header.php'; ?>
 <?php require 'partials/menu.php'; ?>
 
+<?php var_dump( password_hash( 'chibro', PASSWORD_DEFAULT ) ); ?>
+
 <div class="wrapper">
     <div id="left-column">
         <?php if ( $users ): ?>
