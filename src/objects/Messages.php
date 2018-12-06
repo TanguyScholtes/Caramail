@@ -1,4 +1,5 @@
 <?php
+
 require 'Model.php';
 
 class messages extends Model {
@@ -9,7 +10,7 @@ class messages extends Model {
   public $timeStamp;
 
 
-  public function __construct ( $id, $userID, $conversationID, $content, $timeStamp ) {
+  public function __construct ($id, $userID, $conversationID, $content, $timeStamp) {
     $this->id = $id;
     $this->userID = $userID;
     $this->conversationID = $conversationID;
