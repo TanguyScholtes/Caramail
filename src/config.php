@@ -27,6 +27,6 @@ require 'utils/utilities.php';
 require 'objects/Model.php';
 require 'objects/User.php';
 //require 'objects/Conversation.php';
-//require 'objects/Message.php';
+require 'objects/Message.php';
 require 'objects/Reaction.php';
 /* ----- */

@@ -125,7 +125,7 @@ class User extends Model{
 
     }
     function getUser($id){
-        $req= "SELECT pseudo, avatar, id FROM users WHERE id='$id'";
+        $req= "SELECT pseudo, avatar, id, nom, prenom, mail FROM users WHERE id='$id'";
         $exec= $this->connectDB->query($req);
         return $exec->fetch();
     }

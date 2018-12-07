@@ -35,19 +35,10 @@ $users = $usermodel->getAllUsersByConversation($conversation->id);
 
 //TODO: replace with Message's method to get all messages of conversation
 //get all Messages
-$allMessages = [
-    ( object ) array( 'content' => 'Emojis... Emojis everywhere...', 'timestamp' => '23-11-2018 16:16', 'id' => 1, 'author' => $users[ 0 ], 'conversationId' => 1 ),
-    ( object ) array( 'content' => 'This is message two. Wazzup ?', 'timestamp' => '26-11-2018 11:27', 'id' => 2, 'author' => $users[ 1 ], 'conversationId' => 1 ),
-    ( object ) array( 'content' => 'WAZZZZZAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA', 'timestamp' => '26-11-2018 12:22', 'id' => 3, 'author' => $users[ 0 ], 'conversationId' => 1 )
-];
-$messages = [];
-foreach( $allMessages as $msg ) {
-    //walk array of Messages
-    if ( $msg -> conversationId == $conversation -> id ) {
-        //if this Message belongs to current Conversation
-        //stock it in $messages array (which will be displayed below)
-        $messages[] = $msg;
-    }
+$message_model = new Message();
+$messages = $message_model-> getAllMessagesOfConversation($conversation->id);
+foreach ($messages as $message) {
+    $message -> author = $usermodel -> getUser( $message -> pseudo_id );
 }
 /*-----*/
 

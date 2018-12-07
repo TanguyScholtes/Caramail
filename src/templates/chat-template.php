@@ -26,16 +26,16 @@
             <?php foreach ( $messages as $message ): ?>
                 <div class="message">
                     <img class="message-user-avatar" src="<?php echo $message -> author -> avatar; ?>" />
-                    <span class="message-timestamp"><?php echo $message -> timestamp; ?></span>
+                    <span class="message-timestamp"><?php echo $message -> date; ?></span>
                     <span class="message-author"><?php echo $message -> author -> pseudo; ?></span>
                     <?php if ( $message -> author -> id == $_SESSION[ 'user' ] -> id ): ?>
                         <div class="message-controls">
-                            <a class="message-edit" href=""><span class="fas fa-pen"></a>
-                            <a class="message-delete" href=""><span class="fas fa-times"></span></a>
+                            <a class="message-edit" href="message_edit.php?id=<?php echo $message -> id; ?>"><span class="fas fa-pen"></a>
+                            <a class="message-delete" href="message_delete.php?id=<?php echo $message -> id; ?>"><span class="fas fa-times"></span></a>
                         </div>
                     <?php endif; ?>
                     <div class="message-content-wrapper">
-                        <p class="message-content"><?php echo $message -> content; ?></p>
+                        <p class="message-content"><?php echo $message -> message; ?></p>
                     </div>
 
                     <div class="reactions-wrapper">
@@ -55,12 +55,7 @@
                             <?php foreach ( $reactions as $reaction ): ?>
                                 <form class="inline-form" method="post" action="deleteReaction.php?page=<?php echo $currentPage; ?>">
                                     <input type="hidden" name="reaction-delete-id" value="<?php echo $reaction -> id; ?>" />
-                                    <?php foreach ( $users as $user ){
-                                            if ( $user -> id == $reaction -> author_id ) {
-                                                $reaction -> author = $user;
-                                            }
-                                        }
-                                     ?>
+                                    <?php $reaction -> author = $usermodel -> getUser( $reaction -> author_id ); ?>
                                     <?php if ( $reaction -> author -> id == $_SESSION[ 'user' ] -> id ): ?>
                                         <button class="emoji-button" type="submit" title="<?php echo $reaction -> author -> pseudo; ?>">
                                             <?php echo $reaction -> emoji; ?>
@@ -80,13 +75,14 @@
             <p>No message yet. Write one !</p>
         <?php endif; ?>
         <div class="new-message">
-            <form class="new-message-form" method="post" action="">
+            <form class="new-message-form" method="post" action="createmessage.php">
                 <label for="new-message-image" class="new-message-image-label">
                     <input id="new-message-image" type="file" name="new-message-image" />
                 </label>
                 <p class="new-message-content-wrapper">
                     <input class="new-message-content" name="new-message-content" type="text" data-emojiable="true" data-emoji-input="unicode" />
                 </p>
+                <input type="hidden" name="new-message-conversation" value="<?php echo $conversation -> id; ?>" />
                 <button class="button-image" type="submit">
                     <img src="images/bouton-send-resize.png" alt="Send" />
                 </button>
