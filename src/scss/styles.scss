@@ -19,7 +19,61 @@ html{
     background-color: $background-second;
 }
 
+.form{
+    margin-top: 0;
+}
+
+.input{
+    border: 1px solid black;
+    width: inherit;
+    height: inherit;
+    margin: 0;
+    display: inline-block;
+}
+
+.label{
+    color: black;
+    display: inline-block;
+}
+
+#delete-conversation{
+    margin: 0;
+}
+
+#content{
+    height: 100%;
+}
+
+#messages-container{
+    height: 55vh;
+    overflow-y: scroll;
+}
+
+#title-container{
+    position: relative;
+    margin-bottom: 2em;
+    h1{
+        margin-bottom: 0.5rem;
+    }
+
+    p{
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+.emoji-items-wrap1{
+    z-index: 1;
+}
+
+.unread-messages{
+    color: rgb(200, 0, 0);
+    margin-left: 1em;
+}
+
 @import "banner";
+@import "form-login";
 @import "chat-users-list";
 @import "chat-main";
 @import "chat-reactions-forms";

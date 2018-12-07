@@ -34,9 +34,10 @@
 
 .message-content-wrapper{
     background-color: #EBEBEB;
+    box-sizing: border-box;
     padding: 1em 1.5em 1em 124px;
     border-radius: 2em 1em 1em 2em;
-    margin: 0.75em 0;
+    margin: 0.75em 0.5em 0.75em 0;
 }
 
 .message-content{
@@ -46,14 +47,23 @@
 
 .message{
     position: relative;
+    &::after{
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
 
 .message-controls{
     display: inline-block;
     position: absolute;
-    right: 0;
+    right: 0.75em;
 }
 
 .message-delete{
     margin-left: 0.8em;
+}
+
+#left-column{
+    overflow-y: scroll;
 }
