@@ -6,7 +6,7 @@
         <?php if ( $users ): ?>
             <ul class="users-list">
                 <?php foreach( $users as $user ): ?>
-                    <li><a href=""><img class="user-avatar" src="<?php echo $user -> avatar; ?>" /><?php echo $user -> firstname; ?> <?php echo $user -> lastname; ?></a></li>
+                    <li><a href=""><img class="user-avatar" src="<?php echo $user -> avatar; ?>" /><?php echo $user -> pseudo; ?></a></li>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
@@ -18,7 +18,7 @@
         <h1 class="content-title">
             <?php echo $conversation -> subject; ?>
             <?php if ( $conversation -> slug != "general" ): ?>
-                <span id="conversation-subject">by <?php echo $conversation -> author -> firstname; ?> <?php echo $conversation -> author -> lastname; ?></span>
+                <span id="conversation-subject">by <?php echo $conversation -> pseudo; ?></span>
             <?php endif; ?>
         </h1>
 
@@ -27,7 +27,7 @@
                 <div class="message">
                     <img class="message-user-avatar" src="<?php echo $message -> author -> avatar; ?>" />
                     <span class="message-timestamp"><?php echo $message -> timestamp; ?></span>
-                    <span class="message-author"><?php echo $message -> author -> firstname; ?> <?php echo $message -> author -> lastname; ?></span>
+                    <span class="message-author"><?php echo $message -> author -> pseudo; ?></span>
                     <?php if ( $message -> author -> id == $_SESSION[ 'user' ] -> id ): ?>
                         <div class="message-controls">
                             <a class="message-edit" href=""><span class="fas fa-pen"></a>
@@ -62,11 +62,11 @@
                                         }
                                      ?>
                                     <?php if ( $reaction -> author -> id == $_SESSION[ 'user' ] -> id ): ?>
-                                        <button class="emoji-button" type="submit" title="<?php echo $reaction -> author -> firstname; ?> <?php echo $reaction -> author -> lastname; ?>">
+                                        <button class="emoji-button" type="submit" title="<?php echo $reaction -> author -> pseudo; ?>">
                                             <?php echo $reaction -> emoji; ?>
                                         </button>
                                     <?php else: ?>
-                                        <span title="<?php echo $reaction -> author -> firstname; ?> <?php echo $reaction -> author -> lastname; ?>">
+                                        <span title="<?php echo $reaction -> author -> pseudo; ?>">
                                             <?php echo $reaction -> emoji; ?>
                                         </span>
                                     <?php endif; ?>

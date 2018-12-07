@@ -16,7 +16,17 @@ define( "WEBSITE_LANG", "fr-BE" );
 define( "WEBSITE_CHARSET", "utf-8" );
 /* ----- */
 
+//start or resume user session
 session_start();
 
+/* Utilities require */
+require 'utils/utilities.php';
+/* ----- */
+
+/* Objects Include */
 require 'objects/Model.php';
+require 'objects/User.php';
+//require 'objects/Conversation.php';
+//require 'objects/Message.php';
 require 'objects/Reaction.php';
+/* ----- */

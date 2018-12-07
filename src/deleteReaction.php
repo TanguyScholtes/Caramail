@@ -2,14 +2,23 @@
 
 require 'config.php';
 
-$redirect = $_REQUEST[ "page" ];
 $reaction = new Reaction();
 
-//Quick & dirty reaction delete
-if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset( $_POST[ 'reaction-delete-id' ] ) ) {
-    $deleted = $reaction -> deleteReaction( intval( $_POST[ 'reaction-delete-id' ] ) );
+if ( !isset( $_SESSION[ 'user' ] ) ) {
+    //if user is not logged in
+    //redirect to login page
+    header( 'Location: index.php' );
+    die();
 }
 
-//redirect to view page
-header( 'Location: ' . $redirect );
+try {
+    if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' && isset( $_POST[ 'reaction-delete-id' ] ) ) {
+        $deleted = $reaction -> deleteReaction( intval( $_POST[ 'reaction-delete-id' ] ) );
+    }
+} catch ( \PDOException $e ) {
+    //if the request failed, stop request & return error message
+    die( $e -> getMessage() );
+}
+// redirect to view page
+header( 'Location: ' . $_SESSION[ 'page' ] );
 die();
