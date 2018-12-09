@@ -46,59 +46,59 @@ La base de donnée se compose comme suit:
     * Conversation_id 
    
 ## Structure des fichiers
-# Css + Fonts + Images
+### Css + Fonts + Images
 > Stockage du CSS
-# Lib
+### Lib
 >Stockage de la librairie attribuée au emoji picker (https://github.com/OneSignal/emoji-picker)
-# Mockup 
+### Mockup 
 > Maquette du chat + architecture de la DB
-# Objects
+### Objects
 > Stockage des classes:
     - Message.php: Où sont définies l'ensembles de méthodes concernant les messages
     - Model.php: Constructeur permettant la connexion à la base de donnée et dont toute les autres classes héritent.
     - Reaction.php: L'ensemble des méthodes concernant les réactions
     - User.php: L'ensemble des métodes concernant les utilisateurs
-# Partials
+### Partials
 > Footer, Header, Menu -> HTML scindé permettant la réutilisation simplifiée sur chacune des pages.
 #SCSS:
 > Fichiers SASS utilisé par tanguy_styles.css
-# Templates:
+### Templates:
 > Template du chat principal
-# Utils
+### Utils
 > Fonctions utilisables tout au long de l'application n'appartenant pas à une classe définie
-# chat.php
+### chat.php
 > Récupère toutes les données inclues dans le chat et les affiches dans chat-template.php
-# config.php
+### config.php
 > Défini les constantes utilisées pour l'affichage, et dans quel fichier les données permettant la connexion à la base de donnée doivent être cherchées, initialise un session_start(), appelle l'ensemble des classes.
-# createmessage.php
+### createmessage.php
 >Traitement de l'ajout d'un nouveau message dans la base de donnée
-# createReaction.php
+### createReaction.php
 > Traitement de l'ajout d'une nouvelle réaction dans la base de donnée
-# db.ini
+### db.ini
 > Le fichier doit être créé par l'utilisateur pour permettre la connexion à la base de donnée et doit contenir les informations de connexion à la base de donnée: driver, host, dbname, username, password.
-# deconnection.php
+### deconnection.php
 > Traitement de la déconnexion d'un utilisateur -> suppression de la session et des cookies
-# deleteReaction.php
+### deleteReaction.php
 > Traitement de la suppression d'une réaction de la base de donnée
-# edit_profile.php
+### edit_profile.php
 > Traitement et affichage des updates des données des utilisateurs au sein de la base de donnée
-# erase_traitement.php
+### erase_traitement.php
 > Traitement de la suppression en cascade des données de l'utilisateur
-# erase.php
+### erase.php
 > Page transitoire de l'affichage de confirmation de suppression de l'utilisateur
-# index.php
+### index.php
 > Affichage du formulaire de log-in et la redirection à l'inscription 
-# inscription_post.php
+### inscription_post.php
 > Traitement de l'ajout d'un utilisateur à la base de donnée
-# Inscription.php
+### Inscription.php
 > Affichage du formulaire d'inscription
-# Login_traitement.php
+### Login_traitement.php
 > Traitement de la connexion d'un utilisateur
-# message_delete.php
+### message_delete.php
 > Traitement de la suppression d'un message de la base de donnée
-# message_edit.php
+### message_edit.php
 > Affichage et traitement du formulaire d'édition de message
-# profile.php
+### profile.php
 > Affichage du profile de l'utilisateur
 
 
