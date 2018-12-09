@@ -5,9 +5,7 @@ require 'config.php';
 if(isset($_SESSION['id']))
 {
     $usermodel= new User;
-    $req= $usermodel->bdd->prepare("SELECT * FROM users WHERE id= ?");
-    $req->execute(array($_SESSION['id']));
-    $user = $req->fetch();
+    $user = $usermodel -> getUser( $_SESSION['id'] );
     if(isset($_POST['newpseudo']) && $_POST['newfirstname'] && $_POST['newname'] && $_POST['newmail']){
         if(isset($_POST['newpsw'])){
             if($_POST['newpsw']==$_POST['newpsw2']){
@@ -44,16 +42,16 @@ if(isset($_SESSION['id']))
 <h2>Editer mon profil<h2>
 <form method="POST" action="">
     <label>Pseudo</label>
-    <input type="text" name="newpseudo" placeholder="Pseudo" value=<?php echo $user['pseudo'];?>> <br>
+    <input type="text" name="newpseudo" placeholder="Pseudo" value=<?php echo $user -> pseudo;?>> <br>
     <label>Prénom</label>
-    <input type="text" name="newfirstname" placeholder="Prénom" value=<?php echo $user['prenom'];?>> <br>
+    <input type="text" name="newfirstname" placeholder="Prénom" value=<?php echo $user -> prenom;?>> <br>
     <label>Nom</label>
-    <input type="text" name="newname" placeholder="Nom" value=<?php echo $user['nom'];?>> <br>
+    <input type="text" name="newname" placeholder="Nom" value=<?php echo $user -> nom;?>> <br>
     <label>E-Mail</label>
-    <input type="text" name="newmail" placeholder="E-mail" value=<?php echo $user['mail'];?>> <br>
+    <input type="text" name="newmail" placeholder="E-mail" value=<?php echo $user -> mail;?>> <br>
     <label>Mot de passe</label>
     <input type="password" name="newpsw" placeholder="Mot de passe"/> <br>
-    <input type="hidden" name="pswold" value="<?php echo $user['password'];?>"/>
+    <input type="hidden" name="pswold" value="<?php echo $user-> password;?>"/>
     <label>Confirmer mot de passe</label>
     <input type="password" name="newpsw2" placeholder="Confirmer mot de passe"/> <br>
    <input type="submit" value="Editer"/> <br><br>

@@ -4,7 +4,8 @@ class User extends Model{
     function createUser($pseudo, $nom, $prenom, $email, $pass){
         if($this->connectDB){
         try{
-            $sql = "INSERT INTO users (`pseudo`, `nom`, `prenom`, `mail`, `password`) VALUES('$pseudo', '$nom', '$prenom', '$email', '$pass')";
+            $avatar = 'https://api.adorable.io/avatars/285/' . $pseudo . '@adorable.png';
+            $sql = "INSERT INTO users (`pseudo`, `nom`, `prenom`, `mail`, `password`, `avatar`) VALUES('$pseudo', '$nom', '$prenom', '$email', '$pass', '$avatar' )";
             $result = $this->connectDB->query($sql);
         }
 
@@ -23,7 +24,7 @@ class User extends Model{
         $req= $this->connectDB->prepare("SELECT id, password FROM users WHERE pseudo = ?");
         $req->execute(array($pseudo));
         $resultat= $req->fetch();
-        $isPasswordCorrect= password_verify($psw, $resultat['password']);
+        $isPasswordCorrect= password_verify( $psw, $resultat -> password );
 
         if(!$resultat)
         {
@@ -31,7 +32,7 @@ class User extends Model{
         }
         else{
             if($isPasswordCorrect){
-                $_SESSION['id'] = $resultat['id'];
+                $_SESSION['id'] = $resultat -> id;
                 $_SESSION['pseudo'] = $pseudo;
 
             }
@@ -112,7 +113,7 @@ class User extends Model{
     }
     function getAllUsersByConversation($id){
         try{
-            $req= "SELECT users.pseudo, users.id FROM users
+            $req= "SELECT users.pseudo, users.id, users.avatar FROM users
                 JOIN users_conversations ON users.id = users_conversations.user_id
                 WHERE users_conversations.conversation_id='$id'
                 ORDER BY users.pseudo";
