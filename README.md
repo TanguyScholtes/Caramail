@@ -5,54 +5,102 @@
 
 * * *
 
-Le but de cet exercice est de réaliser une petite messagerie web (un mélange entre un webmail et un slack/ryver), en PHP/MySQL.
+## Fonctionnalités
 
-> **NOTE:** nous vous avons préparé un environnement de développement tout compris basé sur [docker](https://www.docker.com). Plus de détails dans la section **Mise en place**, un peu plus bas.
+L'utilisateur à la capacité de s'inscrire à la messagerie , une fois connecté il lui est permi de voir et de modifier son profil, de participer à la conversation générale, de réagir aux messages envoyés. Il lui est permi de supprimer et modifier ses propres messages ainsi que ses réactions et son profil.
 
-## Consignes
+## Présentation
 
-Votre objectif ici est de créer une messagerie _à la Slack/Ryver_, mais bien plus simple, afin de découvrir PHP & les bases de données MySQL.
+Des maquettes ont été réalisées, une partie du CSS issu de ces maquettes est actuellement inséré.
 
-### Fonctionnalités
+## Structure de la base de donnée
+La base de donnée se compose comme suit:
+- Conversation: 
+    * id
+    * Author Id
+    * Subject
+    * Slug
+- Messages:
+    * id
+    * Message
+    * Pseudo_id
+    * Conversation_id
+    * Date
+    > Note: La base de donnée doit être UTF8MB4 pour permettre le stockage des emojis.
+- Reactions: 
+    * id
+    * Author_id
+    * Message_id 
+    * Emoji
+    > Note: La base de donnée doit être UTF8MB4 pour permettre le stockage des emojis.
+- Users:
+    * id
+    * Pseudo
+    * Nom
+    * Prenom
+    * Mail
+    * Password
+    * Avatar
+- Users_conversations:
+    * User_id
+    * Conversation_id 
+   
+## Structure des fichiers
+# Css + Fonts + Images
+> Stockage du CSS
+# Lib
+>Stockage de la librairie attribuée au emoji picker (https://github.com/OneSignal/emoji-picker)
+# Mockup 
+> Maquette du chat + architecture de la DB
+# Objects
+> Stockage des classes:
+    - Message.php: Où sont définies l'ensembles de méthodes concernant les messages
+    - Model.php: Constructeur permettant la connexion à la base de donnée et dont toute les autres classes héritent.
+    - Reaction.php: L'ensemble des méthodes concernant les réactions
+    - User.php: L'ensemble des métodes concernant les utilisateurs
+# Partials
+> Footer, Header, Menu -> HTML scindé permettant la réutilisation simplifiée sur chacune des pages.
+#SCSS:
+> Fichiers SASS utilisé par tanguy_styles.css
+# Templates:
+> Template du chat principal
+# Utils
+> Fonctions utilisables tout au long de l'application n'appartenant pas à une classe définie
+# chat.php
+> Récupère toutes les données inclues dans le chat et les affiches dans chat-template.php
+# config.php
+> Défini les constantes utilisées pour l'affichage, et dans quel fichier les données permettant la connexion à la base de donnée doivent être cherchées, initialise un session_start(), appelle l'ensemble des classes.
+# createmessage.php
+>Traitement de l'ajout d'un nouveau message dans la base de donnée
+# createReaction.php
+> Traitement de l'ajout d'une nouvelle réaction dans la base de donnée
+# db.ini
+> Le fichier doit être créé par l'utilisateur pour permettre la connexion à la base de donnée et doit contenir les informations de connexion à la base de donnée: driver, host, dbname, username, password.
+# deconnection.php
+> Traitement de la déconnexion d'un utilisateur -> suppression de la session et des cookies
+# deleteReaction.php
+> Traitement de la suppression d'une réaction de la base de donnée
+# edit_profile.php
+> Traitement et affichage des updates des données des utilisateurs au sein de la base de donnée
+# erase_traitement.php
+> Traitement de la suppression en cascade des données de l'utilisateur
+# erase.php
+> Page transitoire de l'affichage de confirmation de suppression de l'utilisateur
+# index.php
+> Affichage du formulaire de log-in et la redirection à l'inscription 
+# inscription_post.php
+> Traitement de l'ajout d'un utilisateur à la base de donnée
+# Inscription.php
+> Affichage du formulaire d'inscription
+# Login_traitement.php
+> Traitement de la connexion d'un utilisateur
+# message_delete.php
+> Traitement de la suppression d'un message de la base de donnée
+# message_edit.php
+> Affichage et traitement du formulaire d'édition de message
+# profile.php
+> Affichage du profile de l'utilisateur
 
-Une fois connecté via son email et mot de passe, **l'utilisateur** a la possibilité de créer des **conversations** qui contiendront un ou plusieurs **membres** (d'autres utilisateurs), qui y posteront des **messages**. Les **membres** auront aussi la possibilité d'ajouter des **réactions** à un message, sous la forme d'un _emoji_.
-
-Il va de soit qu'un utilisateur peut éditer et supprimer ses messages (messages qui seront alors visuellement marqués comme édités/supprimés), peut ajouter/retirer une réaction, et peut éditer (mais pas supprimer) une conversation.  
-Chaque utilisateur doit pouvoir voir quel message n'a pas encore été lu par lui-même, et doit être prévenu, _par mail_, d'un nouveau message dans une conversation auquel il participe.
-Dans la même idée, un utilisateur peut modifier son profil (mot de passe, nom, prénom).
-
-> **NOTE:** l'environnement de développement qu'on vous a préparé contient un _mailcatcher_, un outil qui va intercepter les mails envoyés, aucun risque de spammer vos utilisateurs pendant le dev.
-
-### Présentation
-
-Vous trouverez des _wireframe_ pour le projet dans le dossier du même nom.
-
-Concernant le design de la messagerie, ça n'est pas le sujet principal : utilisez [Bootstrap](https://getbootstrap.com/) pour gagner du temps.
-
-### Structures
-
-Vous êtes libres de structurer votre base de données comme bon vous semble, mais chaque modèle doit contenir, à minima :
-
-- **users :** email, password, firstname, lastname
-- **conversations :** author, subject
-- **messages :** date, content, conversation, author
-- **reactions :** message, author, emoji
-
-**Attention :** veillez à stocker les mots de passe dans les règles de l'art !
-
-### Consignes bonus
-
-Pour ceux d'entre vous qui avancent un peu plus vite et/ou veulent un peu plus de _challenge_, voici quelques consignes bonus :
-
-- Pouvoir uploader des fichiers joints à ses messages
-
-## Modalités
-
-Vous allez travailler en petits groupes de trois ou quatre. À vous d'organiser votre travail comme vous le voulez, mais n'oubliez pas que vous êtes sensés _comprendre_ l'ensemble du projet.
-
-Vous avez deux semaines pour livrer le code. Cette livraison s'accompagnera d'un entretien de _passation technique_ : nous figurerons une équipe qui va reprendre la maintenance du projet à votre suite, et vous poserons des questions techniques à ce sujet.
-
-> **NOTE:** n'oubliez pas de nous fournir un *dump* MySQL de votre base de données !
 
 ## Mise en place
 
@@ -103,4 +151,3 @@ Pour connecter vos scripts PHP à la base de données MySQL, utilisez les param�
 
 * * *
 
-Bon travail !
