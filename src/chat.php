@@ -31,16 +31,11 @@ foreach ( $conversations as $convo ) {
 
 $users = $usermodel->getAllUsersByConversation($conversation->id);
 
-
-
-//TODO: replace with Message's method to get all messages of conversation
-//get all Messages
 $message_model = new Message();
 $messages = $message_model-> getAllMessagesOfConversation($conversation->id);
 foreach ($messages as $message) {
     $message -> author = $usermodel -> getUser( $message -> pseudo_id );
 }
-/*-----*/
 
 //get current page & query string for redirection to display when an action is performed on database
 $currentPage = $_SERVER['REQUEST_URI'];
